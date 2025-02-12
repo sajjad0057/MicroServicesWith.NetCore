@@ -1,15 +1,10 @@
-﻿using BuildingBlocks.CQRS.Interfaces;
-using Catalog.API.Models;
+﻿namespace Catalog.API.Products.CreateProduct;
 
-namespace Catalog.API.Products.CreateProduct;
-
-internal class CreateProductHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal sealed class CreateProductHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         //// Business Logic to create a product
-        //// Save to DB
-        //// return CreateProductResult result
 
         var product = new Product
         {
@@ -20,8 +15,11 @@ internal class CreateProductHandler : ICommandHandler<CreateProductCommand, Crea
             Price = command.Price
         };
 
-        await Task.CompletedTask;
+        //// Save to DB
+        session.Store(product);
+        await session.SaveChangesAsync(cancellationToken);
 
+        //// return CreateProductResult result
         return new CreateProductResult(Guid.NewGuid());
     }
 }

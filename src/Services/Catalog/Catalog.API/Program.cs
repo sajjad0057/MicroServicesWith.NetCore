@@ -3,9 +3,16 @@ var builder = WebApplication.CreateBuilder(args);
 #region Configure Services
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
+    config.RegisterServicesFromAssemblies(typeof(Program).Assembly)
+);
+
+#region Configuring Marten
+builder.Services.AddMarten(opt =>
 {
-    config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
-});
+    opt.Connection(builder.Configuration.GetConnectionString("Database")!);
+
+}).UseLightweightSessions();
+#endregion
 
 #endregion
 

@@ -1,6 +1,4 @@
-﻿using BuildingBlocks.CQRS.Interfaces;
-
-namespace Catalog.API.Products.CreateProduct;
+﻿namespace Catalog.API.Products.CreateProduct;
 
 public sealed record CreateProductCommand(
     string Name,
