@@ -9,7 +9,7 @@ public sealed record CreateProductRequest(string Name,
 public sealed record CreateProductResponse(Guid Id);
 
 
-public class CreateProductEndpont : ICarterModule
+public class CreateProductEndpiont : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
