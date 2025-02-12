@@ -1,14 +1,23 @@
 var builder = WebApplication.CreateBuilder(args);
 
-#region Configuring DI
+#region Configure Services
+builder.Services.AddCarter();
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+});
 
+#endregion
+
+#region Configuring DI
 #endregion
 
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-#region Configuring Request pipe-line
+#region Configuring Request pipe-line with Carter Library
+app.MapCarter();
 
 #endregion
 
