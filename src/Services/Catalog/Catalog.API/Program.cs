@@ -14,7 +14,6 @@ builder.Services.AddMediatR(config =>
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
 
 #region Configuring Request pipe-line with Carter Library
 app.MapCarter();
