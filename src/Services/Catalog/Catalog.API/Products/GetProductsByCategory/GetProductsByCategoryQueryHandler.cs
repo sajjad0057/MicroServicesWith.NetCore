@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Products.GetProductByCategory;
+﻿namespace Catalog.API.Products.GetProductsByCategory;
 
 public class GetProductsByCategoryQueryHandler(IDocumentSession session, ILogger<GetProductsByCategoryQueryHandler> logger)
     : IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryQueryResult>

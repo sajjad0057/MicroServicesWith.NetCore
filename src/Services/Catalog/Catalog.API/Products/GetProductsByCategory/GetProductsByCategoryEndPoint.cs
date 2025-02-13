@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Products.GetProductByCategory;
+﻿namespace Catalog.API.Products.GetProductsByCategory;
 
 /// <summary>
 /// For Auto Mapping with Mapster mustbe set Parameter with Capital letter otherwise creating issue to mapping.
