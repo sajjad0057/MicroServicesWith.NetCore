@@ -1,12 +1,19 @@
-using Catalog.API.Products.GetProducts;
+using BuildingBlocks.Behaviours;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Configure Services
 builder.Services.AddCarter();
+
+//// Config MediatR and Behaviours Pipeline -
 builder.Services.AddMediatR(config =>
-    config.RegisterServicesFromAssemblies(typeof(Program).Assembly)
-);
+{ 
+    config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+});
+
 
 #region FluentValidation Config
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
