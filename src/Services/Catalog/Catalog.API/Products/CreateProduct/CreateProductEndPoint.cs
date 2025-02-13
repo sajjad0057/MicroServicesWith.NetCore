@@ -6,10 +6,15 @@ public sealed record CreateProductRequest(string Name,
     string ImageFile,
     decimal Price);
 
+
+/// <summary>
+/// For Auto Mapping with Mapster mustbe set Parameter with Capital letter otherwise creating issue to mapping.
+/// </summary>
+/// <param name="Id"></param>
 public sealed record CreateProductResponse(Guid Id);
 
 
-public sealed class CreateProductEndpiont : ICarterModule
+public sealed class CreateProductEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {

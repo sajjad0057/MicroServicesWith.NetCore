@@ -1,6 +1,11 @@
 ﻿namespace Catalog.API.Products.GetProducts;
 
-public sealed record GetProductsResponse(IEnumerable<Product> products);
+
+/// <summary>
+/// For Auto Mapping with Mapster mustbe set Parameter with Capital later otherwise creating issue to mapping.
+/// </summary>
+/// <param name="Products"></param>
+public sealed record GetProductsResponse(IEnumerable<Product> Products);
 
 public sealed class GetProductsEndpoint : ICarterModule
 {
@@ -10,9 +15,9 @@ public sealed class GetProductsEndpoint : ICarterModule
         {
             var result = await sender.Send(new GetProductsQuery());
 
-            //var response = result.Adapt<GetProductsResponse>(); ////having issue to map, cause unknown now.
+            var response = result.Adapt<GetProductsResponse>();
 
-            return Results.Ok(result);
+            return Results.Ok(response);
         })
         .WithName("GetProducts")
         .Produces<GetProductsResponse>(StatusCodes.Status200OK)

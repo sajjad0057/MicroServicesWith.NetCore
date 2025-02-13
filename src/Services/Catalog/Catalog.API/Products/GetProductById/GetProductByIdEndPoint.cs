@@ -1,8 +1,12 @@
 ﻿namespace Catalog.API.Products.GetProductById;
 
-public sealed record GetProductByIdResponse(Product product);
+/// <summary>
+/// For Auto Mapping with Mapster mustbe set Parameter with Capital letter otherwise creating issue to mapping.
+/// </summary>
+/// <param name="Product"></param>
+public sealed record GetProductByIdResponse(Product Product);
 
-public class GetProductByIdEndPoint : ICarterModule
+public sealed class GetProductByIdEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
@@ -10,9 +14,9 @@ public class GetProductByIdEndPoint : ICarterModule
         {
             var result = await sender.Send(new GetProductByIdQuery(id));
 
-            //var response = result.Adapt<GetProductByIdResponse>();  //// here having an unknown issue to map
+            var response = result.Adapt<GetProductByIdResponse>();
 
-            return Results.Ok(result);
+            return Results.Ok(response);
         })
         .WithName("GetProductById")
         .Produces<GetProductByIdResponse>(StatusCodes.Status200OK)
