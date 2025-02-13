@@ -5,5 +5,5 @@ public sealed record CreateProductCommand(
     List<string> Category,
     string Description,
     string ImageFile,
-    decimal Price) : ICommand<CreateProductResult>;
+    decimal Price) : ICommand<CreateProductCommandResult>;
 
