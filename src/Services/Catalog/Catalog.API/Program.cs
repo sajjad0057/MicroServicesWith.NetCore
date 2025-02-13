@@ -8,8 +8,9 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssemblies(typeof(Program).Assembly)
 );
 
-//TypeAdapterConfig<GetProductsQueryResult, GetProductsResponse>.NewConfig()
-//    .Map(dest => dest.products, src => src.products);
+#region FluentValidation Config
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+#endregion
 
 #region Configuring Marten
 builder.Services.AddMarten(opt =>

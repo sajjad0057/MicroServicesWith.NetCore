@@ -1,19 +1,20 @@
 ﻿namespace Catalog.API.Products.CreateProduct;
 
-internal sealed class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand, CreateProductCommandResult>
+internal sealed class CreateProductCommandHandler
+    (IDocumentSession session, IValidator<CreateProductCommand> validator)
+    : ICommandHandler<CreateProductCommand, CreateProductCommandResult>
 {
     public async Task<CreateProductCommandResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         //// Business Logic to create a product
+        
+        var validationResult = await validator.ValidateAsync(command, cancellationToken);
+        var errors = validationResult.Errors.Select(x=> x.ErrorMessage).ToList();
 
-        //var product = new Product
-        //{
-        //    Name = command.Name,
-        //    Category = command.Category,
-        //    Description = command.Description,
-        //    ImageFile = command.ImageFile,
-        //    Price = command.Price
-        //};
+        if (errors.Any())
+        {
+            throw new ValidationException(errors.FirstOrDefault());
+        }
 
         var product = command.Adapt<Product>(); //// using mapster to mapping object
 
