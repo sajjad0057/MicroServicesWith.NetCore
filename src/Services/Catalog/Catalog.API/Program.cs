@@ -4,19 +4,21 @@ using BuildingBlocks.Behaviours;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Configure Services
-builder.Services.AddCarter();
-
+#region Configure MediatR and PipeLine Behaviours
 //// Config MediatR and Behaviours Pipeline -
 builder.Services.AddMediatR(config =>
 { 
     config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
     config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
 });
-
+#endregion
 
 #region FluentValidation Config
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+#endregion
+
+#region Configuring Carter
+builder.Services.AddCarter();
 #endregion
 
 #region Configuring Marten
@@ -27,7 +29,6 @@ builder.Services.AddMarten(opt =>
 }).UseLightweightSessions();
 #endregion
 
-#endregion
 
 #region Configuring DI
 #endregion
