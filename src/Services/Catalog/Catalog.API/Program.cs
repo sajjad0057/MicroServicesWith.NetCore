@@ -1,6 +1,8 @@
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
 using Catalog.API.DataSeed;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,17 +35,20 @@ builder.Services.AddMarten(opt =>
 
 }).UseLightweightSessions();
 
-
 //// Configuring Dataseeding with Martern
 if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialData>();
-
 #endregion
 
 #region Configuring Custom GlobalExceptionHandler
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 #endregion
 
+#region Registering DI for Health Check
+//// using AspNetCore.HealthChecks.NpgSql package for checking postgresql database server health
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
+#endregion
 
 var app = builder.Build();
 
@@ -54,6 +59,15 @@ app.MapCarter();
 
 #region Configuring ExceptionsHandler pipeline globally
 app.UseExceptionHandler(options => { });
+#endregion
+
+#region Map Health Check Endpoint configuring
+//// Uisng AspNetCore.HealthChecks.UI.Client package to getting healthcheck information as json format.
+app.MapHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 #endregion
 
 app.Run();
