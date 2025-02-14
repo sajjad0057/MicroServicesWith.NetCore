@@ -21,7 +21,7 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
     depends_on:
-      - catelogdb
+      - catalogdb
     ports:
       - "6000:8080"
       - "6060:8081"
