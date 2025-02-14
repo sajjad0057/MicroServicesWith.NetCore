@@ -1,5 +1,6 @@
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
+using Catalog.API.DataSeed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,12 @@ builder.Services.AddMarten(opt =>
     opt.Connection(builder.Configuration.GetConnectionString("Database")!);
 
 }).UseLightweightSessions();
+
+
+//// Configuring Dataseeding with Martern
+if (builder.Environment.IsDevelopment())
+    builder.Services.InitializeMartenWith<CatalogInitialData>();
+
 #endregion
 
 #region Configuring Custom GlobalExceptionHandler
