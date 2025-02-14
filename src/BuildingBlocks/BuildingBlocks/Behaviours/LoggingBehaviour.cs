@@ -31,7 +31,9 @@ public class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest,
 
         if(timeTaken.Seconds > 3)
             _logger.LogWarning($"[PERFORMANCE] The request {typeof(TRequest).Name} took {timeTaken.Seconds} seconds");
-        
+
+        _logger.LogInformation($"[END] Handle request : [{typeof(TRequest).Name}] - RequestData : [{request}] - Response: [{typeof(TResponse).Name}]");
+
         return response;
     }
 }

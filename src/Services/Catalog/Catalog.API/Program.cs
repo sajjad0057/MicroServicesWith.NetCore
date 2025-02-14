@@ -5,11 +5,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region Configure MediatR and PipeLine Behaviours
 //// Config MediatR and Behaviours Pipeline -
+/*The configuration sequence is very important when configuring a pipeline.
+The behavior that set first here will be executed first. This is what happens
+in the case of middleware execution.*/
 builder.Services.AddMediatR(config =>
 { 
     config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
-    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
     config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
+    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(UnhandledExceptionsBehaviour<,>));
 });
 #endregion
 
@@ -33,9 +37,6 @@ builder.Services.AddMarten(opt =>
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 #endregion
 
-#region Configuring DI
-
-#endregion
 
 var app = builder.Build();
 
