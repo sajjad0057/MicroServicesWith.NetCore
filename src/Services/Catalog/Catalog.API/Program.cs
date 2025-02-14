@@ -1,9 +1,5 @@
 using BuildingBlocks.Behaviours;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
-
-
+using BuildingBlocks.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +28,9 @@ builder.Services.AddMarten(opt =>
 }).UseLightweightSessions();
 #endregion
 
+#region Configuring Custom GlobalExceptionHandler
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+#endregion
 
 #region Configuring DI
 #endregion
@@ -39,40 +38,12 @@ builder.Services.AddMarten(opt =>
 var app = builder.Build();
 
 
-#region Configuring Request pipe-line
+#region Configuring Request pipeline
 app.MapCarter();
+#endregion
 
-
-////Handling Exceptions
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-
-        if(exception is null)
-        {
-            return;
-        }
-
-        var problemDetails = new ProblemDetails
-        {
-            Title = exception.Message,
-            Status = StatusCodes.Status500InternalServerError,
-            Detail = exception.StackTrace
-        };
-
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-        logger.LogError(exception, exception.Message, problemDetails);
-
-
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
-        context.Response.ContentType = "application/problem+json";
-
-        await context.Response.WriteAsJsonAsync(problemDetails);
-    });
-});
+#region Configuring ExceptionsHandler pipeline globally
+app.UseExceptionHandler(options => { });
 #endregion
 
 app.Run();
