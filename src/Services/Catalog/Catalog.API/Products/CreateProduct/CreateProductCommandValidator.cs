@@ -4,9 +4,11 @@ public sealed class CreateProductCommandValidator : AbstractValidator<CreateProd
 {
     public CreateProductCommandValidator()
     {
-         RuleFor(x => x.Name)
-            .NotEmpty()
-            .WithMessage("Name is Required");
+        RuleFor(x => x.Name)
+           .NotEmpty()
+           .WithMessage("Name is Required")
+           .Length(2, 250)
+           .WithMessage("Name length must be between 2 - 250 characters");
 
         RuleFor(x => x.Category)
            .NotEmpty()
