@@ -9,6 +9,7 @@ builder.Services.AddMediatR(config =>
 { 
     config.RegisterServicesFromAssemblies(typeof(Program).Assembly);
     config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(LoggingBehaviour<,>));
 });
 #endregion
 
@@ -33,6 +34,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 #endregion
 
 #region Configuring DI
+
 #endregion
 
 var app = builder.Build();
