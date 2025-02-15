@@ -1,6 +1,13 @@
-﻿namespace Basket.API.Basket.DeleteBasket
+﻿namespace Basket.API.Basket.DeleteBasket;
+
+public class DeleteBasketCommandHandler
+    : ICommandHandler<DeleteBasketCommand, DeleteBasketCommandResult>
 {
-    public class DeleteBasketCommandHandler
+    public async Task<DeleteBasketCommandResult> Handle(DeleteBasketCommand commad, CancellationToken cancellationToken)
     {
+        //// TODO : Delete Basket from DB
+        
+        await Task.CompletedTask;
+        return new DeleteBasketCommandResult(true);
     }
 }
