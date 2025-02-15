@@ -1,5 +1,5 @@
 using BuildingBlocks.Behaviours;
-using FluentValidation;
+using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +20,14 @@ builder.Services.AddMediatR(config =>
 #region FluentValidation Config
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 #endregion
+
+#region Configuring Marten
+builder.Services.AddMarten(opt =>
+{
+    opt.Connection(builder.Configuration.GetConnectionString("Database")!);
+    opt.Schema.For<ShoppingCart>().Identity(x => x.UserName);  //// by these set UserName field as Identity field in ShoppingCart Table, plz see marten doc.
+}).UseLightweightSessions();
+#region
 
 #region Configuring Carter
 builder.Services.AddCarter();
