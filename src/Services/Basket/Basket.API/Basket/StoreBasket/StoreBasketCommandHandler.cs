@@ -1,14 +1,17 @@
-﻿
+﻿using Basket.API.Repositories;
+
 namespace Basket.API.Basket.StoreBasket;
 
-internal sealed class StoreBasketCommandHandler : ICommandHandler<StoreBasketCommand, StoreBasketCommandResult>
+internal sealed class StoreBasketCommandHandler(IBasketRepository repository) 
+    : ICommandHandler<StoreBasketCommand, StoreBasketCommandResult>
 {
     public async Task<StoreBasketCommandResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
-        var cart = command.Cart;
         //// TODO : store basket in database (use UPSERT, means if exists then update or insert.
+        await repository.StoreBasketAsync(command.Cart, cancellationToken);
+
         //// TODO : UpdateCache
-        await Task.CompletedTask;
-        return new StoreBasketCommandResult(cart.UserName);
+
+        return new StoreBasketCommandResult(command.Cart.UserName);
     }
 }

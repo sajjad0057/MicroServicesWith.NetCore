@@ -1,4 +1,6 @@
+using Basket.API.Repositories;
 using BuildingBlocks.Behaviours;
+using BuildingBlocks.Exceptions.Handler;
 using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,11 @@ builder.Services.AddMediatR(config =>
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 #endregion
 
+#region Configure DI
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+#endregion
+
+
 #region Configuring Marten
 builder.Services.AddMarten(opt =>
 {
@@ -33,10 +40,19 @@ builder.Services.AddMarten(opt =>
 builder.Services.AddCarter();
 #endregion
 
+#region Configuring Custom GlobalExceptionHandler 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+#endregion
+
+
 var app = builder.Build();
 
 #region Configuring Request pipeline with Mapping Carter
 app.MapCarter();
+#endregion
+
+#region Configuring ExceptionsHandler pipeline globally
+app.UseExceptionHandler(options => { });
 #endregion
 
 app.Run();
