@@ -53,7 +53,7 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 
-#region Configuring Request pipeline
+#region Configuring Request pipeline with Mapping Carter
 app.MapCarter();
 #endregion
 
