@@ -3,6 +3,14 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Basket.API.Repositories;
 
+
+/// <summary>
+/// Here Applying Proxcy Desing Pattern.
+/// The Proxy Pattern is a structural design pattern that provides an intermediate
+/// object (Proxy) to control access to another object (Real Object).
+/// </summary>
+/// <param name="repository"></param>
+/// <param name="cache"></param>
 public class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache)
     : IBasketRepository
 {
