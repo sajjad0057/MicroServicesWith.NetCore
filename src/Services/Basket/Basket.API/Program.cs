@@ -1,10 +1,12 @@
 using Basket.API.Repositories;
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
+using HealthChecks.UI.Client;
 using Marten;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 #region Configuring Marten
 builder.Services.AddMarten(opt =>
@@ -65,14 +67,33 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 #endregion
 
 
+#region In Service Contariner Registering for Health Check
+//// using AspNetCore.HealthChecks.NpgSql package for checking postgresql database server health
+//// using AspNetCore.HealthChecks.Redis package for checking Redis Cache server health
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+#endregion
+
 var app = builder.Build();
 
 #region Configuring Request pipeline with Mapping Carter
 app.MapCarter();
 #endregion
 
+
 #region Configuring ExceptionsHandler pipeline globally
 app.UseExceptionHandler(options => { });
+#endregion
+
+
+#region Map Health Check Endpoint configuring
+//// Uisng AspNetCore.HealthChecks.UI.Client package to getting healthcheck information as json format.
+app.MapHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 #endregion
 
 app.Run();

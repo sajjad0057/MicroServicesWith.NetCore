@@ -44,7 +44,7 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 #endregion
 
-#region Registering DI for Health Check
+#region In Service Contariner Registering for Health Check
 //// using AspNetCore.HealthChecks.NpgSql package for checking postgresql database server health
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
