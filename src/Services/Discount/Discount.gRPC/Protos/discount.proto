@@ -1,0 +1,94 @@
+﻿/*
+এটি একটি gRPC সার্ভিসের (DiscountService) জন্য তৈরি করা Protocol Buffers (proto3) ফাইল।
+এই ফাইলটি Discount Service এর RPC (Remote Procedure Call) অপারেশন এবং ডাটা স্ট্রাকচার ডিফাইন করে।
+*/
+
+/*
+////এটি বলে যে, আমরা Protocol Buffers version 3 (proto3) ব্যবহার করছি।
+*/
+syntax = "proto3";
+
+/*
+ ////C# এ কোড জেনারেট করলে এটি Discount.gRPC.Protos নামস্পেসের মধ্যে থাকবে।
+*/
+option csharp_namespace = "Discount.gRPC.Protos";
+
+
+/*
+////gRPC-এর জন্য এটি package name নির্ধারণ করে
+*/
+package discount;
+
+
+/*
+এটি gRPC সার্ভিস DiscountProtoService সংজ্ঞায়িত করে, যা ডিসকাউন্টের CRUD (Create, Read, Update, Delete) অপারেশন পরিচালনা করবে।
+*/
+//// The discount service definations.
+service DiscountProtoService{
+	//// Discount CRUD Operations
+	rpc GetDiscount (GetDiscountRequest) returns (CouponModel);
+	rpc CreateDiscount (CreateDiscountRequest) returns (CouponModel);
+	rpc UpdateDiscount (UpdateDiscountRequest) returns (CouponModel);
+	rpc DeleteDiscount (DeleteDiscountRequest) returns (DeleteDiscountResponse);
+}
+
+
+/*মেসেজ ডিফিনিশন (ডাটা স্ট্রাকচার বা মডেল)*/
+
+
+/*
+-> CouponModel: ডিসকাউন্ট ডাটার স্ট্রাকচার
+-> এটি ডিসকাউন্ট সম্পর্কিত তথ্য ধারণ করে।
+*/
+message CouponModel {
+	int32 id = 1;
+	string name = 2;
+	string productName = 3;
+	string description = 4;
+	int32 amount = 5;
+}
+
+
+/*
+-> এই মেসেজটি: ক্লায়েন্ট যখন GetDiscount কল করবে, তখন এটি প্রোডাক্টের নাম পাঠাবে।
+-> productName ফিল্ডের মাধ্যমে নির্দিষ্ট প্রোডাক্টের জন্য ডিসকাউন্ট তথ্য চাওয়া হবে।
+*/
+message GetDiscountRequest {
+	string productName = 1;
+}
+
+
+/*
+-> ক্লায়েন্ট যখন CreateDiscount কল করবে, এটি পুরো CouponModel পাঠাবে।
+-> অর্থাৎ, এটি একটি নতুন ডিসকাউন্ট তৈরি করবে।
+*/
+message CreateDiscountRequest {
+	CouponModel coupon = 1;
+}
+
+
+/*
+-> UpdateDiscount কল করার সময় এটি একটি CouponModel পাঠাবে।
+-> অর্থাৎ, এটি বিদ্যমান ডিসকাউন্ট আপডেট করার অনুরোধ পাঠাবে।
+*/
+message UpdateDiscountRequest {
+	CouponModel coupon = 1;
+}
+
+
+/*
+-> DeleteDiscount কল করলে শুধুমাত্র productName পাঠানো হবে।
+-> এটি সেই প্রোডাক্টের ডিসকাউন্ট মুছে ফেলবে।
+*/
+message DeleteDiscountRequest {
+	string productName = 1;
+}
+
+
+/*
+-> DeleteDiscount অপারেশন সফল হয়েছে কিনা, তা জানায়।
+-> success ফিল্ড true বা false হতে পারে।
+*/
+message DeleteDiscountResponse {
+	bool success = 1;
+}
