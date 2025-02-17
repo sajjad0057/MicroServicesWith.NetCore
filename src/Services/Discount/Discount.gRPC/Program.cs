@@ -1,9 +1,16 @@
+using Discount.gRPC.Data;
 using Discount.gRPC.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddGrpc();
+
+#region Adding Configurations for using Sqlite with EF Core
+builder.Services.AddDbContext<DiscountContext>(opts =>
+    opts.UseSqlite(builder.Configuration.GetConnectionString("Database")));
+
+#endregion
 
 var app = builder.Build();
 
