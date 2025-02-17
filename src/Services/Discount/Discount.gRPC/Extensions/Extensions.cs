@@ -9,9 +9,8 @@ namespace Discount.gRPC.Extensions;
 public static class Extensions
 {
     /// <summary>
-    /// Using these UseMigration extension method can doing auto migrate and update db 
-    /// when running these service , for these not need to doing command to genarate 
-    /// and update migrations to database.
+    /// Using these UseMigration extension method can doing auto update DB by migrations file 
+    /// when running these service , for these not need to doing command to update migrations to database.
     /// </summary>
     public static IApplicationBuilder UseMigration(this IApplicationBuilder app)
     {
