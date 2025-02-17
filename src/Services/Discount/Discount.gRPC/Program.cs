@@ -1,4 +1,5 @@
 using Discount.gRPC.Data;
+using Discount.gRPC.Extensions;
 using Discount.gRPC.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,9 @@ builder.Services.AddDbContext<DiscountContext>(opts =>
 
 var app = builder.Build();
 
-#region Configure the HTTP request pipeline. 
+#region Configure the HTTP request pipeline.
+//// Using UseMigration extension method to autogenerate and update migration to DB, when applicaiton started
+app.UseMigration();
 app.MapGrpcService<DiscountService>();
 
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client." +
