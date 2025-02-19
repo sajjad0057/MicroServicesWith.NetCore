@@ -17,7 +17,7 @@ var app = builder.Build();
 
 #region Configure the HTTP request pipeline.
 //// Using UseMigration extension method to autoupdate migration to DB, when applicaiton started
-await app.UseUpdateMigrationToDb();
+app.UseUpdateMigrationToDb();
 
 app.MapGrpcService<DiscountService>();
 
