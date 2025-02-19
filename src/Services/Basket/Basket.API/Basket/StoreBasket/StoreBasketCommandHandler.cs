@@ -7,6 +7,9 @@ internal sealed class StoreBasketCommandHandler(IBasketRepository repository)
 {
     public async Task<StoreBasketCommandResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
+        //// TODO : Communicate with Discount.gRPC and calculate lastest price of product into basket/cart
+        ///
+
         //// TODO : store basket in database (use UPSERT, means if exists then update or insert.
         await repository.StoreBasketAsync(command.Cart, cancellationToken);
 
