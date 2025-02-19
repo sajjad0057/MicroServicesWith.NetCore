@@ -1,6 +1,6 @@
 ﻿/*
 এটি একটি gRPC সার্ভিসের (DiscountService) জন্য তৈরি করা Protocol Buffers (proto3) ফাইল।
-এই ফাইলটি Discount Service এর RPC (Remote Procedure Call) অপারেশন এবং ডাটা স্ট্রাকচার ডিফাইন করে।
+এই ফাইলটি Discount Service এর RPC (Remote Procedure Call) অপারেশন এবং ডাটা স্ট্রাকচার JUST ডিফাইন করে।
 */
 
 /*

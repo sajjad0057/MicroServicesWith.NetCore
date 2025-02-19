@@ -1,4 +1,4 @@
-﻿using Discount.gRPC.Modules;
+﻿using Discount.gRPC.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Discount.gRPC.Data;
