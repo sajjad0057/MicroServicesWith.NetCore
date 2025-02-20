@@ -61,7 +61,7 @@ builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 //// gRPC services
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opts =>
 {
-    opts.Address = new Uri(builder.Configuration["gRPC_Settings:DiscountUrl"]!);
+    opts.Address = new Uri(builder.Configuration["gRPCSettings:DiscountUrl"]!);
 });
 #endregion
 
