@@ -62,7 +62,21 @@ builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opts =>
 {
     opts.Address = new Uri(builder.Configuration["gRPCSettings:DiscountUrl"]!);
-});
+})
+ .ConfigurePrimaryHttpMessageHandler(() =>
+ {
+     /* 
+      * Configured for bipass SSL connection certificate issue when try to connect with Discount.gRPC
+      * microservice from docker env or container. It not recommended to use in production env just for dev env.
+     */
+     var handler = new HttpClientHandler
+     {
+         ServerCertificateCustomValidationCallback =
+         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+     };
+
+     return handler;
+ });
 #endregion
 
 
