@@ -1,6 +1,7 @@
 using Basket.API.Repositories;
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
+using Discount.gRPC.Protos;
 using HealthChecks.UI.Client;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -54,6 +55,14 @@ When you register the same interface (IBasketRepository) multiple times, the las
 Using Scrutor library and following these..
  */
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+#endregion
+
+#region Register Discount.gRPC client service with ServiceContainer
+//// gRPC services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opts =>
+{
+    opts.Address = new Uri(builder.Configuration["gRPC_Settings:DiscountUrl"]!);
+});
 #endregion
 
 
