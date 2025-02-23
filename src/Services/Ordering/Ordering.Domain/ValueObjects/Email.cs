@@ -1,4 +1,6 @@
 ﻿
+using Ordering.Domain.Exceptions;
+
 namespace Ordering.Domain.ValueObjects;
 
 
@@ -10,7 +12,7 @@ public record Email
     {
         if (string.IsNullOrWhiteSpace(value) || !value.Contains("@"))
         {
-            throw new ArgumentException("Invalid email format.");
+            throw new DomainException("Invalid email format.");
         }
         Value = value;
     }
