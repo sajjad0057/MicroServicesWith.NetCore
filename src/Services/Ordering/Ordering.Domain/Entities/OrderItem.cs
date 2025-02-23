@@ -10,13 +10,13 @@ public class OrderItem : Entity<OrderItemId>
     public decimal Price { get; private set; }
     public int Quantity { get; private set; }
 
-    internal OrderItem(OrderId orderId, ProductId productId, decimal price, int quantity)
+    internal OrderItem(OrderId orderId, ProductId productId, int quantity, decimal price)
     {
         Id = OrderItemId.Of(Guid.NewGuid());
         OrderId = orderId;
         ProductId = productId;
-        Price = price;
         Quantity = quantity;
+        Price = price;
     }
 
 }
