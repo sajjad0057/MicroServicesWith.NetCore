@@ -9,6 +9,9 @@ services:
 
   distributedcache:
     image: redis
+  
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
 
 
 #Configuring for Catalog.API
