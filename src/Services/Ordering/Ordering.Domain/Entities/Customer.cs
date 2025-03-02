@@ -6,8 +6,8 @@ namespace Ordering.Domain.Entities;
 public class Customer : Entity<CustomerId>
 {
     public string Name { get; private set; } = default!;
-    public Email Email { get; private set; } = default!;
-    public static Customer Create(CustomerId id, string name, Email email)
+    public string Email { get; private set; } = default!;
+    public static Customer Create(CustomerId id, string name, string email)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 

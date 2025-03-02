@@ -5,7 +5,7 @@ public record Address
 {
     public string FirstName { get; init; } = default!;
     public string LastName { get; init; } = default!;
-    public Email? EmailAddress { get; init; }
+    public string? EmailAddress { get; init; }
     public string AddressLine { get; init; } = default!;
     public string Country { get; init; } = default!;
     public string State { get; init; } = default!;
@@ -13,7 +13,7 @@ public record Address
 
     protected Address() { }
 
-    private Address(string firstName, string lastName, Email emailAddress,
+    private Address(string firstName, string lastName, string emailAddress,
         string addressLine, string country, string state, string zipCode)
     {
         FirstName = firstName;
@@ -25,7 +25,7 @@ public record Address
         ZipCode = zipCode;
     }
 
-    public static Address Of(string firstName, string lastName, Email emailAddress,
+    public static Address Of(string firstName, string lastName, string emailAddress,
         string addressLine, string country, string state, string zipCode)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(firstName, nameof(firstName));
