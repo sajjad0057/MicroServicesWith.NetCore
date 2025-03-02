@@ -27,7 +27,7 @@ internal class InitialData
             var address1 = Address.Of("sajjad", "hossain", "sajjad.ice.pust@gmail.com", "rangpur-gangachara", "Bangladesh", "rangpur", "5410");
             var address2 = Address.Of("john", "doe", "john@gmail.com", "Broadway No:1", "England", "Nottingham", "08050");
 
-            var payment1 = Payment.Of("c1", "5555555555554444", "mehmet", DateTime.Parse("12/12/2028"), "355", 1);
+            var payment1 = Payment.Of("c1", "5555555555554444", "sajjad", DateTime.Parse("12/12/2028"), "355", 1);
             var payment2 = Payment.Of("c2", "8885555555554444", "john", DateTime.Parse("12/12/2038"), "222", 2);
 
             var order1 = Order.Create(
