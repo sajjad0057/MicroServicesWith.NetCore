@@ -1,7 +1,6 @@
-﻿
+﻿using Ordering.Application.Dtos;
 
 namespace Ordering.Application.Orders.Queries.GetOrdersByCustomer;
 
-class GetOrdersByCustomerQueryResult
-{
-}
+public record GetOrdersByCustomerQueryResult(IEnumerable<OrderDto> Orders);
+

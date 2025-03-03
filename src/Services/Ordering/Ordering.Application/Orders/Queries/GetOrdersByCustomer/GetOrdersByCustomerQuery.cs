@@ -1,6 +1,6 @@
-﻿
+﻿using BuildingBlocks.CQRS.Interfaces;
+
 namespace Ordering.Application.Orders.Queries.GetOrdersByCustomer;
 
-class GetOrdersByCustomerQuery
-{
-}
+public record GetOrdersByCustomerQuery(Guid CustomerId) : IQuery<GetOrdersByCustomerQueryResult>;
+

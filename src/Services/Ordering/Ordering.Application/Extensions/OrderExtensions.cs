@@ -23,10 +23,10 @@ public static class OrderExtensions
 
     public static OrderDto ToOrderDto(this Order order)
     {
-        return DtoFromOrder(order);
+        return _DtoFromOrder(order);
     }
 
-    private static OrderDto DtoFromOrder(Order order)
+    private static OrderDto _DtoFromOrder(Order order)
     {
         return new OrderDto(
                     Id: order.Id.Value,
