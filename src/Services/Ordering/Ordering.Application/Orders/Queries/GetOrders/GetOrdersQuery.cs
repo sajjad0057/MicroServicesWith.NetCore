@@ -1,7 +1,9 @@
 ﻿
+using BuildingBlocks.CQRS.Interfaces;
+using BuildingBlocks.Pagination;
 
 namespace Ordering.Application.Orders.Queries.GetOrders;
 
-class GetOrdersQuery
-{
-}
+public record GetOrdersQuery(PaginationRequest PaginationRequest) 
+    : IQuery<GetOrdersQueryResult>;
+

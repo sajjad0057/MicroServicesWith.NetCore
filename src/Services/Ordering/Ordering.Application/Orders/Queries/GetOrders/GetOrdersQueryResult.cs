@@ -1,6 +1,7 @@
-﻿
+﻿using BuildingBlocks.Pagination;
+using Ordering.Application.Dtos;
+
 namespace Ordering.Application.Orders.Queries.GetOrders;
 
-class GetOrdersQueryResult
-{
-}
+public record GetOrdersQueryResult(PaginatedResult<OrderDto> Orders);
+
