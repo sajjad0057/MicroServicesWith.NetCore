@@ -25,7 +25,7 @@ public class UpdateOrderCommandHandler(IApplicationDbContext dbContext)
             throw new NotFoundException($"Order Id : {command.Order.Id} not found");
         }
 
-        UpdateOrderWithNewValues(order, command.Order);
+        _UpdateOrderWithNewValues(order, command.Order);
 
         dbContext.Orders.Update(order);
         await dbContext.SaveChangesAsync(cancellationToken);
@@ -33,7 +33,7 @@ public class UpdateOrderCommandHandler(IApplicationDbContext dbContext)
         return new UpdateOrderCommandResult(true);
     }
 
-    public void UpdateOrderWithNewValues(Order order, OrderDto orderDto)
+    private void _UpdateOrderWithNewValues(Order order, OrderDto orderDto)
     {
         var updatedShippingAddress = Address.Of(orderDto.ShippingAddress.FirstName, orderDto.ShippingAddress.LastName, orderDto.ShippingAddress.EmailAddress, orderDto.ShippingAddress.AddressLine, orderDto.ShippingAddress.Country, orderDto.ShippingAddress.State, orderDto.ShippingAddress.ZipCode);
         var updatedBillingAddress = Address.Of(orderDto.BillingAddress.FirstName, orderDto.BillingAddress.LastName, orderDto.BillingAddress.EmailAddress, orderDto.BillingAddress.AddressLine, orderDto.BillingAddress.Country, orderDto.BillingAddress.State, orderDto.BillingAddress.ZipCode);
