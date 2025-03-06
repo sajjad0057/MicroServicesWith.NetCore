@@ -17,7 +17,7 @@ public class CreateOrderCommandHandler(IApplicationDbContext dbContext)
     {
         ////TODO : Create Order Entity from command object and save it to database then return operational result.
         
-        var order = _CreateNewOrder(command.OrderDto);
+        var order = _CreateNewOrder(command.Order);
         dbContext.Orders.Add(order);
         await dbContext.SaveChangesAsync(cancellationToken);
 

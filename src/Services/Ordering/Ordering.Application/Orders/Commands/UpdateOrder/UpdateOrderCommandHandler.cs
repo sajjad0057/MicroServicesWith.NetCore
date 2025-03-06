@@ -16,16 +16,16 @@ public class UpdateOrderCommandHandler(IApplicationDbContext dbContext)
         //save to database
         //return result
 
-        var orderId = OrderId.Of(command.OrderDto.Id);
+        var orderId = OrderId.Of(command.Order.Id);
         var order = await dbContext.Orders
             .FindAsync([orderId], cancellationToken: cancellationToken);
 
         if (order is null)
         {
-            throw new NotFoundException($"Order Id : {command.OrderDto.Id} not found");
+            throw new NotFoundException($"Order Id : {command.Order.Id} not found");
         }
 
-        UpdateOrderWithNewValues(order, command.OrderDto);
+        UpdateOrderWithNewValues(order, command.Order);
 
         dbContext.Orders.Update(order);
         await dbContext.SaveChangesAsync(cancellationToken);

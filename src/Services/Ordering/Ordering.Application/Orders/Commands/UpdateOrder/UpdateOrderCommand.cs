@@ -4,7 +4,7 @@ using Ordering.Application.Dtos;
 
 namespace Ordering.Application.Orders.Commands.UpdateOrder;
 
-public sealed record UpdateOrderCommand(OrderDto OrderDto)
+public sealed record UpdateOrderCommand(OrderDto Order)
     : ICommand<UpdateOrderCommandResult>;
 
 
