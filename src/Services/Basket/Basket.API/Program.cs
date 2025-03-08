@@ -1,6 +1,7 @@
 using Basket.API.Repositories;
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.Messaging.Configurations.MassTransit;
 using Discount.gRPC.Protos;
 using HealthChecks.UI.Client;
 using Marten;
@@ -77,6 +78,11 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 
      return handler;
  });
+#endregion
+
+
+#region Configuring Async Communication(MassTransit.RabbitMQ) Services for message broker
+builder.Services.AddMessageBroker(builder.Configuration);
 #endregion
 
 
