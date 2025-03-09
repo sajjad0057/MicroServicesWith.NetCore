@@ -13,6 +13,9 @@ services:
   orderdb:
     image: mcr.microsoft.com/mssql/server
 
+  messagebroker:
+    image: rabbitmq:management
+
 
 #Configuring for Catalog.API
   catalog.api:
@@ -29,6 +32,7 @@ services:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
+
 #Configuring for Discount.gRPC
   discount.grpc:
     image: ${DOCKER_REGISTRY-}discountgrpc
@@ -37,10 +41,18 @@ services:
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
 
 
-#Mapping Postgres DB Volumes
+#Configuring for Ordering.API
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
 
 
 

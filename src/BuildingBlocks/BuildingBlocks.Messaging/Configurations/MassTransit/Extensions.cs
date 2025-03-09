@@ -14,7 +14,7 @@ public static class Extensions
     {
         //// TODO: put configuration with service container
 
-#region Implement RabbitMQ MassTransit configuration
+        #region Implement RabbitMQ MassTransit configuration
 
         services.AddMassTransit(config =>
         {
@@ -34,7 +34,7 @@ public static class Extensions
             });
         });
 
-#endregion
+        #endregion
 
 
         return services;
