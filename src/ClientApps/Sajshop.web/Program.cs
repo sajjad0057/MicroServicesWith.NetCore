@@ -1,7 +1,22 @@
+using Refit;
+using Sajshop.web.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+
+#region Configuring Refit
+
+builder.Services.AddRefitClient<ICatalogService>()
+    .ConfigureHttpClient(c =>
+    {
+        c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
+    });
+
+#endregion
+
 
 var app = builder.Build();
 
