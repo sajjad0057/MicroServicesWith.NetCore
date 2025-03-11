@@ -1,0 +1,75 @@
+version: '1.0.0'
+
+services:
+  catalogdb:
+    image: postgres
+
+  basketdb:
+    image: postgres
+
+  distributedcache:
+    image: redis
+  
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
+
+  messagebroker:
+    image: rabbitmq:management
+
+
+#Configuring for Catalog.API
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
+
+#Configuring for Basket.API
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+
+
+#Configuring for Discount.gRPC
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discountgrpc
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+
+
+#Configuring for Ordering.API
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
+
+#Configuring for YarpApiGateway
+  yarpapigateway:
+    image: ${DOCKER_REGISTRY-}yarpapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/YarpApiGateway/Dockerfile
+
+
+#Configuring for Sajshop.web
+  sajshop.web:
+    image: ${DOCKER_REGISTRY-}sajshopweb
+    build:
+      context: .
+      dockerfile: ClientApps/Sajshop.web/Dockerfile
+
+volumes:
+  postgres_catalog:
+  postgres_basket:
+
+
+
+
+
+
