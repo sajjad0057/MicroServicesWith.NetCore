@@ -56,9 +56,18 @@ services:
       context: .
       dockerfile: ApiGateways/YarpApiGateway/Dockerfile
 
+
+#Configuring for Sajshop.web
+  sajshop.web:
+    image: ${DOCKER_REGISTRY-}sajshopweb
+    build:
+      context: .
+      dockerfile: ClientApps/Sajshop.web/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
 
 
 
